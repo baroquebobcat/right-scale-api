@@ -1,5 +1,5 @@
 module RightScaleAPI
-  class Deployment < Base
+  class Deployment < Account::SubResource
     attributes %w(
       nickname
       description
@@ -10,8 +10,6 @@ module RightScaleAPI
       updated_at
       created_at
     )
-
-    attr_accessor :account
 
     def start_all
       post '/start_all'

@@ -1,5 +1,5 @@
 module RightScaleAPI
-  class AlertSpec < Base
+  class AlertSpec < Account::SubResource
     attributes %w(
       name
       file
@@ -10,8 +10,7 @@ module RightScaleAPI
       duration
       description
     )
-    attr_accessor :account
-    
+
     #params
     # subject -- either a Server or a ServerTemplate
     def attach_to subject

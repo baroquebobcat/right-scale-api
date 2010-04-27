@@ -18,18 +18,30 @@
       new :id => id
     end
    
+    def self.create opts
+      object = new opts
+      puts object.collection_uri, :query => {api_name => opts}
+      result = RightScaleAPI::Client.post(object.collection_uri, :query => {api_name => opts})
+      puts result
+      new opt.merge(result.merge(:href => result.headers['location']))
+    end
+
+    def self.api_name
+      name.demodulize.underscore
+    end
+    
     def initialize attributes
       attributes.each do |attr,value|
         send "#{attr}=", value
       end
       
       unless id
-        self.id = id_from_href href
+        self.id = id_from_href href if href
       end
     end
     
     def update attrs
-      put '',:query => {self.class.to_s.tableize => attrs}
+      put '',:query => {self.class.api_name => attrs}
     end
     
     def destroy

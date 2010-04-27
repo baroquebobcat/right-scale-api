@@ -1,7 +1,6 @@
 module RightScaleAPI
-  class Status < Base
+  class Status <  Account::SubResource
     attributes %w(
-      account
       description
       started_at
       ended_at

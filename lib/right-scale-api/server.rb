@@ -1,5 +1,5 @@
 module RightScaleAPI
-  class Server < Base
+  class Server < Account::SubResource
     attributes %w(
       server_template_href
       server_type
@@ -11,13 +11,7 @@ module RightScaleAPI
       current_instance_href
       state
     )
-    
-    attr_accessor :account
-    
-    def collection_uri
-      account.path + "/servers"
-    end
-    
+        
     def start
       post '/start'
     end
