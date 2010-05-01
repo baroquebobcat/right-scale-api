@@ -1,10 +1,12 @@
-class RightScaleAPI::Client
-  include HTTParty
-  
-  base_uri "https://my.rightscale.com/"
-  headers 'X-API-Version' => "1.0"
-  
-  class <<self
-    alias :login :basic_auth
+module RightScaleAPI
+  class RightScaleAPI::Client
+    include HTTParty
+    
+    base_uri BASE_URI
+    headers 'X-API-Version' => API_VERSION
+    
+    class <<self
+      alias :login :basic_auth
+    end
   end
 end

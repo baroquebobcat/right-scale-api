@@ -1,4 +1,5 @@
-  class RightScaleAPI::Base
+module RightScaleAPI
+  class Base
     
     attr_accessor :id, :href
     
@@ -8,11 +9,19 @@
         @attributes ||= []
         @attributes += attrs
         attr_accessor *attrs
+
+        @attributes.each do |attr|
+          if attr =~ /(.+)_href$/
+            relation = $1
+            attr_accessor relation
+          end
+        end
+
       end
       @attributes
     end
     
-    attributes [:tags, :created_at, :updated_at]
+    attributes [:tags, :created_at, :updated_at,:errors]
 
     def self.get id
       new :id => id
@@ -20,10 +29,21 @@
    
     def self.create opts
       object = new opts
-      puts object.collection_uri, :query => {api_name => opts}
-      result = RightScaleAPI::Client.post(object.collection_uri, :query => {api_name => opts})
-      puts result
-      new opt.merge(result.merge(:href => result.headers['location']))
+      
+      query_opts = opts_to_query_opts opts
+      
+      result = RightScaleAPI::Client.post(object.collection_uri, :body => {api_name => query_opts})
+
+      if result.code.to_i != 201
+        p object.collection_uri
+        p query_opts
+        p result.code
+        p result.headers
+        puts result.inspect
+        raise "create failed"
+      end
+      
+      new opts.merge(result.merge(:href => result.headers['location'].first))
     end
 
     def self.api_name
@@ -41,7 +61,7 @@
     end
     
     def update attrs
-      put '',:query => {self.class.api_name => attrs}
+      put '', :body => {self.class.api_name =>  self.class.opts_to_query_opts(attrs)}
     end
     
     def destroy
@@ -58,7 +78,7 @@
     end
     
     def uri
-      self.class.base_uri + path
+      RightScaleAPI::Client.base_uri + path
     end
     protected
     
@@ -84,4 +104,20 @@
     def path_from_href href
       URI.parse(href).path
     end
+
+    def self.opts_to_query_opts opts
+      query_opts = opts.dup
+      
+      relations = attributes.select {|a|a.include? '_href'}
+      relations.each do |r|
+        r_name = r.sub('_href','').to_sym
+        if query_opts[r_name]
+          query_opts[r] = query_opts.delete(r_name).href
+        end
+      end
+      query_opts.delete_if {|k,v| ! attributes.include? k.to_s }
+
+      query_opts
+    end
   end
+end

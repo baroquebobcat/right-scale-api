@@ -11,18 +11,31 @@ module RightScaleAPI
                           #{resource.to_s.classify}.new attrs.merge(:account => self)
                         end
                       end
-                      )
+                      ),__FILE__, __LINE__-6
       end
     end
 
-    sub_resources :servers, :deployments, :alert_specs, :ec2_ebs_volumes, :ec2_elastic_ips, :server_templates
+    sub_resources :alert_specs,
+                  :deployments,
+                  :ec2_ebs_volumes,
+                  :ec2_elastic_ips,
+                  :ec2_security_groups,
+                  :server_templates,
+                  :servers
 
     def create_ec2_elastic_ip opts
       Ec2ElasticIp.create opts.merge :account => self
     end
+    
+    def create_ec2_ebs_volume opts
+      Ec2EbsVolume.create opts.merge :account => self
+    end
 
+    def create_server opts
+      Server.create opts.merge :account => self
+    end
     def get_ec2_ssh_key id
-      Ec2SshKey.new get "/ec2_ssh_keys/#{id}"
+      Ec2SshKey.new get("/ec2_ssh_keys/#{id}").merge :id => id, :account => self
     end
 
     class SubResource < Base

@@ -1,4 +1,5 @@
 module RightScaleAPI
+# currently this resource has no index method
   class Status <  Account::SubResource
     attributes %w(
       description

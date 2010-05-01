@@ -1,9 +1,7 @@
 module RightScaleAPI
-class Ec2EbsVolume < Base
-   attr_accessor :account
+class Ec2EbsVolume < Account::SubResource
 
    attributes %w(
-      nickname
       description
       ec2_availability_zone
       aws_attached_at
@@ -16,9 +14,10 @@ class Ec2EbsVolume < Base
    )
 
    def attach_to_server server, device, mount
-     account.post '/component_ec2_ebs_volumes', :query => {
+     account.post '/component_ec2_ebs_volumes', :body => {
        :component_ec2_ebs_volumes => {
          :ec2_ebs_volume_href => uri,
+         :component_href => server.href,
          :device => device,
          :mount => mount
        }
