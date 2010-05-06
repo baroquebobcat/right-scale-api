@@ -11,6 +11,10 @@ module RightScaleAPI
       created_at
     )
 
+    def servers= list
+      @servers = list.map {|params| Server.new params.merge(:account => self.account, :deployment => self) }
+    end
+    
     def start_all
       post '/start_all'
     end
