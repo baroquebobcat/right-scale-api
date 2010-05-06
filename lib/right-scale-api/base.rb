@@ -6,11 +6,12 @@ module RightScaleAPI
     #attributes that directly correspond to the api's
     def self.attributes attrs=nil
       if attrs
+        @attributes ||= Base.attributes
         @attributes ||= []
-        @attributes += attrs
+        @attributes += attrs.map {|attr|attr.to_sym}
         attr_accessor *attrs
 
-        @attributes.each do |attr|
+        attrs.each do |attr|
           if attr =~ /(.+)_href$/
             relation = $1
             attr_accessor relation
@@ -21,7 +22,7 @@ module RightScaleAPI
       @attributes
     end
     
-    attributes [:tags, :created_at, :updated_at,:errors]
+    attributes [:tags, :created_at, :updated_at,:errors, :nickname]
 
     def self.get id
       new :id => id
@@ -124,14 +125,14 @@ module RightScaleAPI
     def self.opts_to_query_opts opts
       query_opts = opts.dup
       
-      relations = attributes.select {|a|a.include? '_href'}
+      relations = attributes.select {|a|a.to_s.include? '_href'}
       relations.each do |r|
-        r_name = r.sub('_href','').to_sym
+        r_name = r.to_s.sub('_href','').to_sym
         if query_opts[r_name]
           query_opts[r] = query_opts.delete(r_name).href
         end
       end
-      query_opts.delete_if {|k,v| ! attributes.include? k.to_s }
+      query_opts.delete_if {|k,v| ! attributes.include? k.to_sym }
 
       query_opts
     end
