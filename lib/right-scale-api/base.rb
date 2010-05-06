@@ -68,13 +68,29 @@ module RightScaleAPI
       delete ''
     end
 
-    def method_missing method,*args
-      if %w(get head post put delete).include? method.to_s
-        args[0] = "#{path}#{args[0]}"
-        RightScaleAPI::Client.send method, *args
-      else
-        super method, *args
-      end
+    def send_request method, *args
+      args[0] = "#{path}#{args[0]}"
+      RightScaleAPI::Client.send method, *args
+    end
+
+    def get *args
+      send_request :get, *args
+    end
+
+    def head *args
+      send_request :head, *args
+    end
+
+    def post *args
+      send_request :post, *args
+    end
+
+    def put *args
+      send_request :put, *args
+    end
+
+    def delete *args
+      send_request :delete, *args
     end
     
     def uri
