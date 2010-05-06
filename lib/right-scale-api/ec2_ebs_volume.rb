@@ -15,7 +15,7 @@ class Ec2EbsVolume < Account::SubResource
 
    def attach_to_server server, device, mount
      account.post '/component_ec2_ebs_volumes', :body => {
-       :component_ec2_ebs_volumes => {
+       :component_ec2_ebs_volume => {
          :ec2_ebs_volume_href => uri,
          :component_href => server.href,
          :device => device,
