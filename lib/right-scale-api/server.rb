@@ -39,6 +39,10 @@ module RightScaleAPI
       get('/settings')['settings']
     end
 
+    def running?
+      state == 'operational'
+    end
+
     def attach_volume volume, device
       if running?
         post '/attach_volume', :query => {
