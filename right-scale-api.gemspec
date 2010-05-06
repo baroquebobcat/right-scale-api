@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nick Howard"]
-  s.date = %q{2010-05-01}
+  s.date = %q{2010-05-06}
   s.description = %q{A client for the RightScale API that hides some of the complexity of the API
 (It doesn't require passing around hrefs as much). Based on HTTParty
 }
@@ -20,7 +20,9 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     ".gitignore",
+     "LICENSE",
      "README.md",
+     "Rakefile",
      "VERSION",
      "lib/right-scale-api.rb",
      "lib/right-scale-api/account.rb",
@@ -35,7 +37,11 @@ Gem::Specification.new do |s|
      "lib/right-scale-api/ec2_ssh_key.rb",
      "lib/right-scale-api/server.rb",
      "lib/right-scale-api/server_template.rb",
-     "lib/right-scale-api/status.rb"
+     "lib/right-scale-api/status.rb",
+     "right-scale-api.gemspec",
+     "spec/right-scale-api_spec.rb",
+     "spec/spec.opts",
+     "spec/spec_helper.rb"
   ]
   s.homepage = %q{http://github.com/baroquebobcat/right-scale-api}
   s.rdoc_options = ["--charset=UTF-8"]
