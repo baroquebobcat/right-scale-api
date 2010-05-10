@@ -97,6 +97,13 @@ module RightScaleAPI
     def uri
       RightScaleAPI::Client.base_uri + path
     end
+
+    def reload!
+      get('')[self.class.api_name].each do |attr, value|
+        self.send :"#{attr}=",value
+      end
+    end
+
     protected
     
     def self.collection_uri uri=nil
