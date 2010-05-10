@@ -64,5 +64,14 @@ module RightScaleAPI
       volume = account.create_ec2_ebs_volume opts
       attach_volume volume, device
     end
+
+    def self.opts_to_query_opts opts
+      assoc_ip = opts.delete :associate_eip_at_launch
+      if !assoc_ip.nil?
+        opts[:associate_eip_at_launch] = assoc_ip ? 1 : 0
+      end
+      super opts
+    end
+
   end
 end
