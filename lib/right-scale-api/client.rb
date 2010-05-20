@@ -1,5 +1,5 @@
 module RightScaleAPI
-  class RightScaleAPI::Client
+  class Client
     include HTTParty
     
     base_uri BASE_URI
