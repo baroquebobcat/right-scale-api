@@ -18,6 +18,7 @@ module RightScaleAPI
     sub_resources :alert_specs,
                   :deployments,
                   :ec2_ebs_volumes,
+                  :ec2_ebs_snapshots,
                   :ec2_elastic_ips,
                   :ec2_security_groups,
                   :server_templates,

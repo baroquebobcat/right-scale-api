@@ -5,6 +5,7 @@ module RightScaleAPI
       public_ip
       cloud_id
       server_href
+      instance_href
       )
   end 
 end
