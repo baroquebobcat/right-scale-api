@@ -22,8 +22,12 @@ module RightScaleAPI
                   :ec2_elastic_ips,
                   :ec2_security_groups,
                   :server_templates,
-                  :servers
+                  :servers,
+                  :s3_buckets
 
+    def create_deployment opts
+      Deployment.create opts.merge :account => self
+    end
     def create_ec2_elastic_ip opts
       Ec2ElasticIp.create opts.merge :account => self
     end

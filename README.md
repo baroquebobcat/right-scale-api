@@ -1,7 +1,9 @@
 RightScale API Gem
 =======================
 
-A client library for the RightScale API.
+A client library for the RightScale API. Still under development, but it has enough written to be useful.
+
+There aren't any tests yet and it doesn't fully cover all the object types RightScale's API supports.
 
 RightScale's [API Docs]("http://support.rightscale.com/15-References/RightScale_API_Reference_Guide")
 
@@ -37,3 +39,18 @@ Usage Examples
     server.update :associate_eip_at_launch => true, 
                   :ec2_elastic_ip => ip
     server.start
+
+#### Create a Deployment
+
+    account.create_deployment :nickname	   => 'foo',
+    			      :description => 'foo bar baz'
+#### Show all Servers
+    account.servers
+#### Show an individual server
+    account.servers.find {|server| server.id ==}
+
+## Contributions Welcome
+
+Fork away.
+
+Needs tests, filling out the object types, etc.
