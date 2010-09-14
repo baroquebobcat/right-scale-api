@@ -43,8 +43,8 @@ module RightScaleAPI
         puts result.inspect
         raise "create failed"
       end
-      
-      new opts.merge(result.merge(:href => result.headers['location'].first))
+
+      new opts.merge(result.merge(:href =>  result.headers['location']))
     end
 
     def self.api_name

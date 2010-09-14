@@ -12,7 +12,7 @@ begin
     gem.email = "ndh@baroquebobcat.com"
     gem.homepage = "http://github.com/baroquebobcat/right-scale-api"
     gem.authors = ["Nick Howard"]
-    gem.add_dependency "httparty"
+    gem.add_dependency "httparty", "~> 0.6.0"
     gem.add_dependency "activesupport"
     gem.add_development_dependency "rspec", ">= 1.2.9"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
