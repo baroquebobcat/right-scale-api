@@ -3,7 +3,8 @@ module RightScaleAPI
     
     attr_accessor :id, :href
     
-    #attributes that directly correspond to the api's
+    # attributes that directly correspond to the api's
+    # @param [Array<Symbol>] attrs a list of attributes an object type has
     def self.attributes attrs=nil
       if attrs
         @attributes ||= Base.attributes
@@ -24,10 +25,14 @@ module RightScaleAPI
     
     attributes [:tags, :created_at, :updated_at,:errors, :nickname]
 
+    # gets an object by id
+    # @param id [Fixnum]
     def self.get id
       new :id => id
     end
    
+    # creates a new object on RightScale
+    # @param opts [Hash] attributes of the created object
     def self.create opts
       object = new opts
       
@@ -47,6 +52,7 @@ module RightScaleAPI
       new opts.merge(result.merge(:href =>  result.headers['location']))
     end
 
+    # The RightScale API name for the class
     def self.api_name
       name.demodulize.underscore
     end
@@ -61,10 +67,13 @@ module RightScaleAPI
       end
     end
     
+    # Updates the object with the passed attributes
+    # @param [Hash] attrs the updated attributes
     def update attrs
       put '', :body => {self.class.api_name =>  self.class.opts_to_query_opts(attrs)}
     end
     
+    # tells the API to delete the object
     def destroy
       delete ''
     end
@@ -94,10 +103,12 @@ module RightScaleAPI
       send_request :delete, *args
     end
     
+    # the objects uri on rightscale
     def uri
       RightScaleAPI::Client.base_uri + path
     end
 
+    # Reload the attributes of the object
     def reload!
       get('')[self.class.api_name].each do |attr, value|
         self.send :"#{attr}=",value

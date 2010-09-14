@@ -1,6 +1,7 @@
 require 'yaml'
 require 'httparty'
 require 'active_support/core_ext'
+require 'active_support/multibyte'
 
 module RightScaleAPI
   API_VERSION = '1.0'

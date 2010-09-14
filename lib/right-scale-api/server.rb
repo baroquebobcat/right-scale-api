@@ -22,27 +22,39 @@ module RightScaleAPI
       type
       vpc_subnet_href
     )
-        
+    
+    # Starts the server
     def start
       post '/start'
     end
     
+    # Stops the server
     def stop
       post '/stop'
     end
     
+    # Reboots the server
     def reboot
       post '/reboot'
     end
     
+    # Server Settings
+    # for info: under Sub-resources on
+    # http://support.rightscale.com/15-References/RightScale_API_Reference_Guide/02-Management/02-Servers
     def settings
       get('/settings')['settings']
     end
 
-    def running?
+    # Is the server operational
+    def operational?
       state == 'operational'
     end
+    
+    alias :running? :operational?
 
+    # Attach a volume to the server
+    # @param [RightScaleAPI::Ec2EbsVolume] volume the volume to attach
+    # @param [String] device the device to attach it as e.g. /dev/sdk
     def attach_volume volume, device
       if running?
         post '/attach_volume', :query => {
@@ -56,8 +68,9 @@ module RightScaleAPI
       end
     end
 
-    # Account#create_ec2_ebs_volume's opts +
-    # :device -- device mount point, eg /dev/sdk
+    # creates a blank volume and attaches it to the server
+    # @param [Hash] opts Account#create_ec2_ebs_volume's opts +
+    # @option [String] :device device mount point, e.g. /dev/sdk
     def attach_blank_volume opts
       device = opts.delete :device
       opts = {:ec2_availability_zone => 'us-east-1a'}.merge opts #default to the server's avail zone
