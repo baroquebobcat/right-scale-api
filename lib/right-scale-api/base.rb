@@ -129,7 +129,7 @@ module RightScaleAPI
     end
     
     def path
-      collection_uri + "/" + id
+      "#{collection_uri}/#{id}"
     end
     
     def id_from_href href

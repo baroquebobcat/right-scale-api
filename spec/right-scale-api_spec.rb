@@ -16,5 +16,16 @@ describe RightScaleAPI do
 
   describe RightScaleAPI::Account do
     #
+    describe "#create_ec2_ebs_volume" do
+      #when receive a 422
+      #do stuff with error
+      #missing ec2_avaliability_zone 
+      # Error:Unknown availability zone '' for the cloud AWS US-East
+      #missing aws_size
+      #  Error:MissingParameter: The request must contain the parameter size/snapshot
+    end
+    describe "#create_server" do
+      #@parsed_response={"errors"=>{"error"=>["Server template can't be blank", "Deployment can't be blank"]}}
+    end
   end
 end

@@ -73,7 +73,7 @@ module RightScaleAPI
       attr_accessor :account
 
       def collection_uri
-        account.path + "/" + self.class.api_name.pluralize
+        "#{account.path}/#{self.class.api_name.pluralize}"
       end
     end
 
