@@ -1,8 +1,6 @@
 module RightScaleAPI
   class Base
     
-    attr_accessor :id, :href
-    
     # attributes that directly correspond to the api's
     # @param [Array<Symbol>] attrs a list of attributes an object type has
     def self.attributes attrs=nil
@@ -23,7 +21,7 @@ module RightScaleAPI
       @attributes
     end
     
-    attributes [:tags, :created_at, :updated_at,:errors, :nickname]
+    attributes [:id, :href, :tags, :created_at, :updated_at,:errors, :nickname]
 
     # gets an object by id
     # @param id [Fixnum]
@@ -38,7 +36,7 @@ module RightScaleAPI
       
       query_opts = opts_to_query_opts opts
       
-      result = RightScaleAPI::Client.post(object.collection_uri, :body => {api_name => query_opts})
+      result = RightScaleAPI::Client.post(object.collection_uri, :body => query_opts)
 
       if result.code.to_i != 201
         p object.collection_uri
@@ -143,6 +141,11 @@ module RightScaleAPI
     def self.opts_to_query_opts opts
       query_opts = opts.dup
       
+      if query_opts[:region]
+        val = query_opts.delete :region
+        query_opts[:cloud_id] = RightScaleAPI::CLOUD_REGIONS[val.to_sym]
+      end
+      
       relations = attributes.select {|a|a.to_s.include? '_href'}
       relations.each do |r|
         r_name = r.to_s.sub('_href','').to_sym
@@ -150,7 +153,11 @@ module RightScaleAPI
           query_opts[r] = query_opts.delete(r_name).href
         end
       end
-      query_opts.delete_if {|k,v| ! attributes.include? k.to_sym }
+
+      attrs = query_opts.dup.delete_if {|k,v| ! attributes.include? k.to_sym }
+      query_opts.dup.delete_if {|k,v| attributes.include? k.to_sym }
+
+      query_opts[api_name] = attrs
 
       query_opts
     end

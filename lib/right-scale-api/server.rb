@@ -4,7 +4,6 @@ module RightScaleAPI
       aki_image_href
       ari_image_href
       associate_eip_at_launch
-      cloud_id
       current_instance_href
       deployment_href
       ec2_availability_zone

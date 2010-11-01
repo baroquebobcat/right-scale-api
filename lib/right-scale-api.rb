@@ -7,6 +7,13 @@ module RightScaleAPI
   API_VERSION = '1.0'
   BASE_URI = "https://my.rightscale.com/"
 
+  CLOUD_REGIONS = {
+    :us_east => 1,
+    :eu      => 2,
+    :us_west => 3,
+    :ap      => 4
+  }
+
   def self.login *args
     Client.login *args
   end
