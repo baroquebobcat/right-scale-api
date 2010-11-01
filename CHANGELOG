@@ -1,0 +1,30 @@
+==
+0.0.5
+
+  * Add the ability to pass query params to subresource 'getters'
+  * Add mapping of cloud region names to ids. 
+    Usage(both): account.servers :region => :eu
+
+==
+0.0.4
+
+  * use YARDoc for comments
+  * fix headers so they work with httparty
+  * add support for S3 buckets
+  * add Account#create_deployment
+==
+0.0.3
+
+  * add snapshots as a subresource of account
+  * clean up client code
+  * add missing attribute instance_href to ip
+==
+0.0.2
+
+  * replace true false with 1,0 in servers query opts munging
+  * add reload!
+
+==
+0.0.1
+
+  * initial
