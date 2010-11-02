@@ -123,7 +123,7 @@ module RightScaleAPI
 
     def attach_blank_volume opts
       device = opts.delete :device
-      opts = {:ec2_availability_zone => ec2_availability_zone }.merge opts #default to the server's avail zone
+      opts = {:ec2_availability_zone => ec2_availability_zone }.merge opts
       volume = account.create_ec2_ebs_volume opts
       attach_volume volume, device
     end

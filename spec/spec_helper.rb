@@ -6,6 +6,4 @@ require 'fakeweb'
 require 'rspec'
 require 'rspec/autorun'
 
-#RSpec::Runner.configure do |config|
-  FakeWeb.allow_net_connect = false
-#end
+FakeWeb.allow_net_connect = false

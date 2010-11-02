@@ -29,7 +29,6 @@ describe RightScaleAPI do
   end
 
   describe RightScaleAPI::Account do
-    #
     describe "#create_ec2_ebs_volume" do
       #when receive a 422
       #do stuff with error
