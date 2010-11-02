@@ -1,4 +1,11 @@
 ==
+0.0.6
+
+  * Add settings attributes to Servers
+  * make collection_uri & path public
+  * Server#attach_blank_volume now grabs the server's availability zone rather than using us-east-1a by default
+  * fixed bug in 0.0.5 where create wouldn't work because we passed invalid attrs to Base#new
+==
 0.0.5
 
   * Add the ability to pass query params to subresource 'getters'
