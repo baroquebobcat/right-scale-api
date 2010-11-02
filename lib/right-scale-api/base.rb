@@ -32,10 +32,10 @@ module RightScaleAPI
     # creates a new object on RightScale
     # @param opts [Hash] attributes of the created object
     def self.create opts
-      object = new opts
-      
+      object_opts = opts.reject{|k,v| ! instance_methods.include? "#{k}="}
+      object = new object_opts
       query_opts = opts_to_query_opts opts
-      
+
       result = RightScaleAPI::Client.post(object.collection_uri, :body => query_opts)
 
       if result.code.to_i != 201
@@ -47,7 +47,7 @@ module RightScaleAPI
         raise "create failed"
       end
 
-      new opts.merge(result.merge(:href =>  result.headers['location']))
+      new object_opts.merge(result.merge(:href =>  result.headers['location']))
     end
 
     # The RightScale API name for the class
