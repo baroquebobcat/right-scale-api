@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
      "LICENSE",
      "README.md",
      "Rakefile",
-     "VERSION",
      "right-scale-api.gemspec"] + Dir["{lib,spec}/**/*"]
   s.homepage = %q{http://github.com/baroquebobcat/right-scale-api}
   s.rdoc_options = ["--charset=UTF-8"]
