@@ -88,6 +88,11 @@ module RightScaleAPI
       settings
     end
 
+    def reload!
+      super
+      reload_settings
+    end
+
     # Is the server operational
     def operational?
       state == 'operational'
