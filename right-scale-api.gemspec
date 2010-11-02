@@ -20,26 +20,7 @@ Gem::Specification.new do |s|
      "README.md",
      "Rakefile",
      "VERSION",
-     "lib/right-scale-api.rb",
-     "lib/right-scale-api/account.rb",
-     "lib/right-scale-api/alert_spec.rb",
-     "lib/right-scale-api/base.rb",
-     "lib/right-scale-api/client.rb",
-     "lib/right-scale-api/deployment.rb",
-     "lib/right-scale-api/ec2_ebs_snapshot.rb",
-     "lib/right-scale-api/ec2_ebs_volume.rb",
-     "lib/right-scale-api/ec2_elastic_ip.rb",
-     "lib/right-scale-api/ec2_security_group.rb",
-     "lib/right-scale-api/ec2_ssh_key.rb",
-     "lib/right-scale-api/s3_bucket.rb",
-     "lib/right-scale-api/server.rb",
-     "lib/right-scale-api/server_template.rb",
-     "lib/right-scale-api/status.rb",
-     "right-scale-api.gemspec",
-     "spec/right-scale-api_spec.rb",
-     "spec/spec.opts",
-     "spec/spec_helper.rb"
-  ]
+     "right-scale-api.gemspec"] + Dir["{lib,spec}/**/*"]
   s.homepage = %q{http://github.com/baroquebobcat/right-scale-api}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
