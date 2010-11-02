@@ -113,6 +113,14 @@ module RightScaleAPI
       end
     end
 
+    def collection_uri
+      self.class.collection_uri
+    end
+    
+    def path
+      "#{collection_uri}/#{id}"
+    end
+
     protected
     
     def self.collection_uri uri=nil
@@ -122,13 +130,6 @@ module RightScaleAPI
       @collection_uri
     end
     
-    def collection_uri
-      self.class.collection_uri
-    end
-    
-    def path
-      "#{collection_uri}/#{id}"
-    end
     
     def id_from_href href
       href.split('/').last
