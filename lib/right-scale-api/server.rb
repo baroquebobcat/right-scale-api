@@ -21,7 +21,42 @@ module RightScaleAPI
       type
       vpc_subnet_href
     )
+
+    SETTINGS = %w(
+      ec2_ssh_key_href
+      ec2_security_groups_href
+      ec2_instance_type
+      aki_image_href
+      ari_image_href
+      ec2_image_href
+      vpc_subnet_href
+      pricing
+      max_spot_price
+      locked
+      ec2_availability_zone
+      aws_platform
+      dns_name
+      private_dns_name
+      ip_address
+      private_ip_address
+      aws_id
+      cloud_id
+      aws_product_codes
+)
+
+    SETTINGS.each do |name|
+      module_eval <<-END,__FILE__, __LINE__+1
+        def #{name}
+          @#{name} ||= settings["#{name}"]
+        end
+      END
+    end
     
+    #returns the cloud region the server is in (:us_east,:us_west,:eu,:ap)
+    def region
+      RightScaleAPI::CLOUD_REGIONS.find{|k,v|v == cloud_id}.first
+    end
+
     # Starts the server
     def start
       post '/start'
@@ -41,7 +76,16 @@ module RightScaleAPI
     # for info: under Sub-resources on
     # http://support.rightscale.com/15-References/RightScale_API_Reference_Guide/02-Management/02-Servers
     def settings
-      get('/settings')['settings']
+      @settings ||= get('/settings')['settings']
+    end
+
+    def reset_settings
+      @settings = nil
+    end
+
+    def reload_settings
+      reset_settings
+      settings
     end
 
     # Is the server operational
@@ -69,10 +113,12 @@ module RightScaleAPI
 
     # creates a blank volume and attaches it to the server
     # @param [Hash] opts Account#create_ec2_ebs_volume's opts +
-    # @option [String] :device device mount point, e.g. /dev/sdk
+    # @option opts [String] :device device mount point, e.g. /dev/sdk
+    # @option opts [String] :ec2_availability_zone (server's) availability zone to create the volume in.
+
     def attach_blank_volume opts
       device = opts.delete :device
-      opts = {:ec2_availability_zone => 'us-east-1a'}.merge opts #default to the server's avail zone
+      opts = {:ec2_availability_zone => ec2_availability_zone }.merge opts #default to the server's avail zone
       volume = account.create_ec2_ebs_volume opts
       attach_volume volume, device
     end
