@@ -12,6 +12,20 @@ describe RightScaleAPI do
       subject {  Class.new(RightScaleAPI::Base).new({}) }
       it { subject.should respond_to(:href) }
     end
+
+    describe '.create' do
+      before do
+        subject.attributes []
+        RightScaleAPI::Client.stub!(:post).and_return mock('httparty response', :code => 201, :headers => {}, :merge => {})
+      end
+
+      it "doesn't send invalid attrs to the object" do
+        subject.should_not_receive(:new).with hash_including(:foo => 1)
+        subject.should_receive(:new).twice.and_return(mock('base', :collection_uri => ''))
+
+        subject.create :foo => 1, :id => 2
+      end
+    end
   end
 
   describe RightScaleAPI::Account do

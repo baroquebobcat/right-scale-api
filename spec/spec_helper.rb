@@ -3,9 +3,9 @@
 require 'rubygems'
 require 'right-scale-api'
 require 'fakeweb'
-require 'spec'
-require 'spec/autorun'
+require 'rspec'
+require 'rspec/autorun'
 
-Spec::Runner.configure do |config|
+#RSpec::Runner.configure do |config|
   FakeWeb.allow_net_connect = false
-end
+#end
