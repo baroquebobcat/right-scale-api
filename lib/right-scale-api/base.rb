@@ -32,7 +32,7 @@ module RightScaleAPI
     # creates a new object on RightScale
     # @param opts [Hash] attributes of the created object
     def self.create opts
-      object_opts = opts.reject{|k,v| ! instance_methods.include? "#{k}="}
+      object_opts = opts.reject{|k,v| ! method_defined? "#{k}="}
       object = new object_opts
       query_opts = opts_to_query_opts opts
 
